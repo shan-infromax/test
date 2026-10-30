@@ -3,21 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Infromax One</title>
+  <title>Infromax Enterprise Suite</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background-color: #0b1220; }
-    iframe {
+    html, body { width: 100%; height: 100%; overflow: hidden; background-color: #0b1220; font-family: system-ui, -apple-system, sans-serif; }
+    .app-frame {
       width: 100%;
-      height: 100%;
+      height: calc(100% - 50px);
       border: none;
-      outline: none;
+      display: none;
+    }
+    .app-frame.active {
       display: block;
+    }
+    .nav-btn {
+      color: #94a3b8;
+      transition: all 0.2s ease;
+    }
+    .nav-btn.active {
+      color: #2dd4bf;
+      background-color: #1e2a47;
+      border-bottom: 2px solid #2dd4bf;
     }
   </style>
 </head>
-<body>
-  <!-- Yahan APNA Google Apps Script Exec Link Daalein -->
-  <iframe src="https://script.google.com/macros/s/AKfycbwQe52UEBqQ0OZwLpKaTbzd6Hlm9v0rC5tgQ0oCOD4PjXystuT3oHyRNky9DSzx8O1f/exec"></iframe>
+<body class="flex flex-col">
+
+  <!-- TOP APP SWITCHER NAVIGATION BAR -->
+  <nav class="h-[50px] bg-slate-900 border-b border-slate-800 flex items-center justify-around px-2 z-50">
+    <button onclick="switchApp('payment', this)" class="nav-btn active flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold">
+      <i class="fa-solid fa-wallet text-sm"></i>
+      <span>Finance OS</span>
+    </button>
+    <button onclick="switchApp('crm', this)" class="nav-btn flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold">
+      <i class="fa-solid fa-users text-sm"></i>
+      <span>CRM</span>
+    </button>
+    <button onclick="switchApp('quotation', this)" class="nav-btn flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold">
+      <i class="fa-solid fa-file-signature text-sm"></i>
+      <span>Quotation</span>
+    </button>
+    <button onclick="switchApp('inventory', this)" class="nav-btn flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold">
+      <i class="fa-solid fa-boxes-stacked text-sm"></i>
+      <span>Inventory</span>
+    </button>
+  </nav>
+
+  <!-- APP IFRAME CONTAINERS -->
+  <iframe id="iframe-payment" class="app-frame active" src="https://script.google.com/macros/s/AKfycbwQe52UEBqQ0OZwLpKaTbzd6Hlm9v0rC5tgQ0oCOD4PjXystuT3oHyRNky9DSzx8O1f/exec"></iframe>
+  <iframe id="iframe-crm" class="app-frame" src="https://script.google.com/macros/s/AKfycbwSmjjLndtPvc8skrMlTTzv8On_exERoEtiES8Pq4NrGkDQZuPKBB-tK144B-E8ikiwRQ/exec"></iframe>
+  <iframe id="iframe-quotation" class="app-frame" src="https://script.google.com/macros/s/AKfycbyJDO4A03oksZs8x0wsWZLEeEHFf3VCmxdT8_Q9U8LiHrond08a0gWB-aScGW9jg6aLqg/exec"></iframe>
+  <iframe id="iframe-inventory" class="app-frame" src="https://script.google.com/macros/s/AKfycbzPlR_p0TskQAEmeETG5oV_ZNEqelhhEpCkMz0Zyc0ypSvjxXbglp1HBXBzJ5MWrUgv/exec"></iframe>[cite: 1]
+
+  <script>
+    function switchApp(appKey, btnElement) {
+      // Hide all iframes
+      document.querySelectorAll('.app-frame').forEach(frame => {
+        frame.classList.remove('active');
+      });
+
+      // Remove active tab state
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Show selected app iframe and highlight button
+      document.getElementById('iframe-' + appKey).classList.add('active');
+      btnElement.classList.add('active');
+    }
+  </script>
 </body>
 </html>
